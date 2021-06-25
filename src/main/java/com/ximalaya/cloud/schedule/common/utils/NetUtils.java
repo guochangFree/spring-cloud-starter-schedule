@@ -16,12 +16,9 @@
  */
 package com.ximalaya.cloud.schedule.common.utils;
 
-import org.apache.dubbo.common.URL;
-import org.apache.dubbo.common.config.ConfigurationUtils;
-import org.apache.dubbo.common.constants.CommonConstants;
-import org.apache.dubbo.common.logger.Logger;
-import org.apache.dubbo.common.logger.LoggerFactory;
-import org.apache.dubbo.common.logger.support.FailsafeLogger;
+import com.ximalaya.cloud.schedule.common.URL;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.net.*;
@@ -29,9 +26,9 @@ import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.regex.Pattern;
 
+import static com.ximalaya.cloud.schedule.common.constants.CommonConstants.*;
+import static com.ximalaya.cloud.schedule.common.utils.CollectionUtils.first;
 import static java.util.Collections.emptyList;
-import static org.apache.dubbo.common.constants.CommonConstants.*;
-import static org.apache.dubbo.common.utils.CollectionUtils.first;
 
 /**
  * IP and Port Helper for RPC
@@ -42,9 +39,6 @@ public class NetUtils {
 
     static {
         logger = LoggerFactory.getLogger(NetUtils.class);
-        if (logger instanceof FailsafeLogger) {
-            logger = ((FailsafeLogger) logger).getLogger();
-        }
     }
 
     // returned port range is [30000, 39999]
@@ -218,16 +212,6 @@ public class NetUtils {
         return host;
     }
 
-    public static String getIpByConfig() {
-        String configIp = ConfigurationUtils.getProperty(DUBBO_IP_TO_BIND);
-        if (configIp != null) {
-            return configIp;
-        }
-
-        InetAddress localAddress = getLocalAddress();
-        String hostName = localAddress == null ? LOCALHOST_VALUE : localAddress.getHostName();
-        return getIpByHost(hostName);
-    }
 
     /**
      * Find first valid IP from local network card
@@ -276,7 +260,7 @@ public class NetUtils {
                 }
             }
         } catch (Throwable e) {
-            logger.warn(e);
+            logger.warn("",e);
         }
 
         try {
@@ -286,7 +270,7 @@ public class NetUtils {
                 return addressOp.get();
             }
         } catch (Throwable e) {
-            logger.warn(e);
+            logger.warn("",e);
         }
 
 
@@ -306,7 +290,7 @@ public class NetUtils {
                 || !networkInterface.isUp()){
             return true;
         }
-        String ignoredInterfaces = System.getProperty(DUBBO_NETWORK_IGNORED_INTERFACE);
+        String ignoredInterfaces = System.getProperty(NETWORK_IGNORED_INTERFACE);
         String networkInterfaceDisplayName;
         if(StringUtils.isNotEmpty(ignoredInterfaces)
                 &&StringUtils.isNotEmpty(networkInterfaceDisplayName=networkInterface.getDisplayName())){
@@ -344,11 +328,11 @@ public class NetUtils {
      *
      * @param networkInterface {@link NetworkInterface}
      * @return if the name of the specified {@link NetworkInterface} matches
-     * the property value from {@link CommonConstants#DUBBO_PREFERRED_NETWORK_INTERFACE}, return <code>true</code>,
+     * the property value from {@link com.ximalaya.cloud.schedule.common.constants.CommonConstants#PREFERRED_NETWORK_INTERFACE}, return <code>true</code>,
      * or <code>false</code>
      */
     public static boolean isPreferredNetworkInterface(NetworkInterface networkInterface) {
-        String preferredNetworkInterface = System.getProperty(DUBBO_PREFERRED_NETWORK_INTERFACE);
+        String preferredNetworkInterface = System.getProperty(PREFERRED_NETWORK_INTERFACE);
         return Objects.equals(networkInterface.getDisplayName(), preferredNetworkInterface);
     }
 
@@ -364,7 +348,7 @@ public class NetUtils {
         try {
             validNetworkInterfaces = getValidNetworkInterfaces();
         } catch (Throwable e) {
-            logger.warn(e);
+            logger.warn("", e);
         }
 
         NetworkInterface result = null;
@@ -505,18 +489,6 @@ public class NetUtils {
                 break;
             }
         }
-    }
-
-    public static boolean matchIpExpression(String pattern, String host, int port) throws UnknownHostException {
-
-        // if the pattern is subnet format, it will not be allowed to config port param in pattern.
-        if (pattern.contains("/")) {
-            CIDRUtils utils = new CIDRUtils(pattern);
-            return utils.isInRange(host);
-        }
-
-
-        return matchIpRange(pattern, host, port);
     }
 
     /**

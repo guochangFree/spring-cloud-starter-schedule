@@ -16,12 +16,9 @@
  */
 package com.ximalaya.cloud.schedule.common.utils;
 
-import com.alibaba.fastjson.JSON;
-import org.apache.dubbo.common.io.UnsafeStringWriter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.PrintWriter;
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -29,7 +26,6 @@ import java.util.regex.Pattern;
 import static java.lang.String.valueOf;
 import static java.util.Collections.emptySet;
 import static java.util.Collections.unmodifiableSet;
-import static org.apache.dubbo.common.constants.CommonConstants.*;
 
 /**
  * StringUtils
@@ -523,10 +519,6 @@ public final class StringUtils {
         return true;
     }
 
-    public static boolean isContains(String values, String value) {
-        return isNotEmpty(values) && isContains(COMMA_SPLIT_PATTERN.split(values), value);
-    }
-
     public static boolean isContains(String str, char ch) {
         return isNotEmpty(str) && str.indexOf(ch) >= 0;
     }
@@ -570,44 +562,6 @@ public final class StringUtils {
             }
         }
         return true;
-    }
-
-
-    /**
-     * @param e
-     * @return string
-     */
-    public static String toString(Throwable e) {
-        UnsafeStringWriter w = new UnsafeStringWriter();
-        PrintWriter p = new PrintWriter(w);
-        p.print(e.getClass().getName());
-        if (e.getMessage() != null) {
-            p.print(": " + e.getMessage());
-        }
-        p.println();
-        try {
-            e.printStackTrace(p);
-            return w.toString();
-        } finally {
-            p.close();
-        }
-    }
-
-    /**
-     * @param msg
-     * @param e
-     * @return string
-     */
-    public static String toString(String msg, Throwable e) {
-        UnsafeStringWriter w = new UnsafeStringWriter();
-        w.write(msg + "\n");
-        PrintWriter p = new PrintWriter(w);
-        try {
-            e.printStackTrace(p);
-            return w.toString();
-        } finally {
-            p.close();
-        }
     }
 
     /**
@@ -840,20 +794,6 @@ public final class StringUtils {
         return parseKeyValuePair(qs, "\\&");
     }
 
-    public static String getServiceKey(Map<String, String> ps) {
-        StringBuilder buf = new StringBuilder();
-        String group = ps.get(GROUP_KEY);
-        if (isNotEmpty(group)) {
-            buf.append(group).append("/");
-        }
-        buf.append(ps.get(INTERFACE_KEY));
-        String version = ps.get(VERSION_KEY);
-        if (isNotEmpty(group)) {
-            buf.append(":").append(version);
-        }
-        return buf.toString();
-    }
-
     public static String toQueryString(Map<String, String> ps) {
         StringBuilder buf = new StringBuilder();
         if (ps != null && ps.size() > 0) {
@@ -898,40 +838,8 @@ public final class StringUtils {
         return buf == null ? camelName : buf.toString();
     }
 
-    public static String toArgumentString(Object[] args) {
-        StringBuilder buf = new StringBuilder();
-        for (Object arg : args) {
-            if (buf.length() > 0) {
-                buf.append(COMMA_SEPARATOR);
-            }
-            if (arg == null || ReflectUtils.isPrimitives(arg.getClass())) {
-                buf.append(arg);
-            } else {
-                try {
-                    buf.append(JSON.toJSONString(arg));
-                } catch (Exception e) {
-                    logger.warn(e.getMessage(), e);
-                    buf.append(arg);
-                }
-            }
-        }
-        return buf.toString();
-    }
-
     public static String trim(String str) {
         return str == null ? null : str.trim();
-    }
-
-    public static String toURLKey(String key) {
-        return key.toLowerCase().replaceAll(SEPARATOR_REGEX, HIDDEN_KEY_PREFIX);
-    }
-
-    public static String toOSStyleKey(String key) {
-        key = key.toUpperCase().replaceAll(DOT_REGEX, UNDERLINE_SEPARATOR);
-        if (!key.startsWith("DUBBO_")) {
-            key = "DUBBO_" + key;
-        }
-        return key;
     }
 
     public static boolean isAllUpperCase(String str) {
@@ -1077,16 +985,4 @@ public final class StringUtils {
         return (byte) ((hi << 4) + lo);
     }
 
-    /**
-     * Create the common-delimited {@link String} by one or more {@link String} members
-     *
-     * @param one    one {@link String}
-     * @param others others {@link String}
-     * @return <code>null</code> if <code>one</code> or <code>others</code> is <code>null</code>
-     * @since 2.7.8
-     */
-    public static String toCommaDelimitedString(String one, String... others) {
-        String another = arrayToDelimitedString(others, COMMA_SEPARATOR);
-        return isEmpty(another) ? one : one + COMMA_SEPARATOR + another;
-    }
 }

@@ -14,15 +14,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.apache.dubbo.common;
+package com.ximalaya.cloud.schedule.common;
 
-import org.apache.dubbo.common.config.Configuration;
-import org.apache.dubbo.common.config.InmemoryConfiguration;
-import org.apache.dubbo.common.constants.RemotingConstants;
-import org.apache.dubbo.common.utils.ArrayUtils;
-import org.apache.dubbo.common.utils.CollectionUtils;
-import org.apache.dubbo.common.utils.NetUtils;
-import org.apache.dubbo.common.utils.StringUtils;
+import com.ximalaya.cloud.schedule.common.config.Configuration;
+import com.ximalaya.cloud.schedule.common.config.InmemoryConfiguration;
+import com.ximalaya.cloud.schedule.common.constants.RemotingConstants;
+import com.ximalaya.cloud.schedule.common.utils.ArrayUtils;
+import com.ximalaya.cloud.schedule.common.utils.CollectionUtils;
+import com.ximalaya.cloud.schedule.common.utils.NetUtils;
+import com.ximalaya.cloud.schedule.common.utils.StringUtils;
 
 import java.io.Serializable;
 import java.io.UnsupportedEncodingException;
@@ -42,24 +42,10 @@ import java.util.TreeMap;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Predicate;
 
-import static org.apache.dubbo.common.constants.CommonConstants.ANYHOST_KEY;
-import static org.apache.dubbo.common.constants.CommonConstants.ANYHOST_VALUE;
-import static org.apache.dubbo.common.constants.CommonConstants.COMMA_SPLIT_PATTERN;
-import static org.apache.dubbo.common.constants.CommonConstants.DEFAULT_KEY_PREFIX;
-import static org.apache.dubbo.common.constants.CommonConstants.GROUP_KEY;
-import static org.apache.dubbo.common.constants.CommonConstants.HOST_KEY;
-import static org.apache.dubbo.common.constants.CommonConstants.INTERFACE_KEY;
-import static org.apache.dubbo.common.constants.CommonConstants.LOCALHOST_KEY;
-import static org.apache.dubbo.common.constants.CommonConstants.METHODS_KEY;
-import static org.apache.dubbo.common.constants.CommonConstants.PASSWORD_KEY;
-import static org.apache.dubbo.common.constants.CommonConstants.PATH_KEY;
-import static org.apache.dubbo.common.constants.CommonConstants.PORT_KEY;
-import static org.apache.dubbo.common.constants.CommonConstants.PROTOCOL_KEY;
-import static org.apache.dubbo.common.constants.CommonConstants.TIMESTAMP_KEY;
-import static org.apache.dubbo.common.constants.CommonConstants.USERNAME_KEY;
-import static org.apache.dubbo.common.constants.CommonConstants.VERSION_KEY;
-import static org.apache.dubbo.common.convert.Converter.convertIfPossible;
-import static org.apache.dubbo.common.utils.StringUtils.isBlank;
+
+import static com.ximalaya.cloud.schedule.common.constants.CommonConstants.*;
+import static com.ximalaya.cloud.schedule.common.convert.Converter.convertIfPossible;
+import static com.ximalaya.cloud.schedule.common.utils.StringUtils.isBlank;
 
 /**
  * URL - Uniform Resource Locator (Immutable, ThreadSafe)
@@ -227,7 +213,7 @@ class URL implements Serializable {
     }
 
     /**
-     * NOTICE: This method allocate too much objects, we can use {@link URLStrParser#parseDecodedStr(String)} instead.
+     * NOTICE: This method allocate too much objects, we can use  URLStrParser # parseDecodedStr (String)} instead.
      * <p>
      * Parse url string
      *
