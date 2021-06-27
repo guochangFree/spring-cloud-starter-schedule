@@ -15,9 +15,7 @@
  * limitations under the License.
  */
 
-package com.ximalaya.cloud.schedule.common.constants;
-
-import com.ximalaya.cloud.schedule.common.URL;
+package com.ximalaya.schedule.core.common.constants;
 
 import java.util.regex.Pattern;
 
@@ -40,7 +38,7 @@ public interface CommonConstants {
 
     String PROTOCOL_SEPARATOR = "://";
 
-    String PROTOCOL_SEPARATOR_ENCODED = URL.encode(PROTOCOL_SEPARATOR);
+    //String PROTOCOL_SEPARATOR_ENCODED = URL.encode(PROTOCOL_SEPARATOR);
 
     String REGISTRY_SEPARATOR = "|";
 

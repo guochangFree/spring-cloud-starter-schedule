@@ -14,12 +14,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.ximalaya.cloud.schedule.common;
+package com.ximalaya.schedule.core.common;
 
 
-import com.ximalaya.cloud.schedule.common.utils.StringUtils;
+import com.ximalaya.schedule.core.common.utils.StringUtils;
 
-import static com.ximalaya.cloud.schedule.common.constants.CommonConstants.DEFAULT_VERSION;
+import static com.ximalaya.schedule.core.common.constants.CommonConstants.DEFAULT_VERSION;
 
 
 /**

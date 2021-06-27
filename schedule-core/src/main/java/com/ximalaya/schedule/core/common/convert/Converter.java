@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.ximalaya.cloud.schedule.common.convert;
+package com.ximalaya.schedule.core.common.convert;
 
 
 /**
@@ -45,13 +45,7 @@ public interface Converter<S, T> {
      * @return
      */
     static Converter<?, ?> getConverter(Class<?> sourceType, Class<?> targetType) {
-        return new Converter<Object, Object>() {
-            @Override
-            public Object convert(Object source) {
-
-                return null;
-            }
-        };
+        return (Converter<Object, Object>) source -> null;
     }
 
     /**

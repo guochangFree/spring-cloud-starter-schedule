@@ -14,9 +14,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.ximalaya.cloud.schedule.common.utils;
+package com.ximalaya.schedule.core.common.utils;
 
-import com.ximalaya.cloud.schedule.common.URL;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -26,8 +25,9 @@ import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.regex.Pattern;
 
-import static com.ximalaya.cloud.schedule.common.constants.CommonConstants.*;
-import static com.ximalaya.cloud.schedule.common.utils.CollectionUtils.first;
+import com.ximalaya.schedule.core.common.URL;
+
+import static com.ximalaya.schedule.core.common.constants.CommonConstants.*;
 import static java.util.Collections.emptyList;
 
 /**
@@ -328,7 +328,7 @@ public class NetUtils {
      *
      * @param networkInterface {@link NetworkInterface}
      * @return if the name of the specified {@link NetworkInterface} matches
-     * the property value from {@link com.ximalaya.cloud.schedule.common.constants.CommonConstants#PREFERRED_NETWORK_INTERFACE}, return <code>true</code>,
+     * the property value from {@link com.ximalaya.schedule.core.common.constants.CommonConstants#PREFERRED_NETWORK_INTERFACE}, return <code>true</code>,
      * or <code>false</code>
      */
     public static boolean isPreferredNetworkInterface(NetworkInterface networkInterface) {
@@ -381,7 +381,7 @@ public class NetUtils {
         }
 
         if (result == null) {
-            result = first(validNetworkInterfaces);
+            result = CollectionUtils.first(validNetworkInterfaces);
         }
 
         return result;

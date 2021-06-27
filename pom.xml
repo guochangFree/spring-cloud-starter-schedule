@@ -6,7 +6,11 @@
 
     <groupId>com.ximalaya</groupId>
     <artifactId>spring-cloud-starter-schedule</artifactId>
+    <packaging>pom</packaging>
     <version>1.0.0</version>
+    <modules>
+        <module>schedule-core</module>
+    </modules>
     <properties>
         <slf4j-api.version>1.7.22</slf4j-api.version>
     </properties>

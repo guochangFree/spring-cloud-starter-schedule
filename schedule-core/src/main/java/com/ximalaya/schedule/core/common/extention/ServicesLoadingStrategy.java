@@ -14,13 +14,28 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
-package com.ximalaya.cloud.schedule.common.constants;
+package com.ximalaya.schedule.core.common.extention;
 
 /**
- * RemotingConstants
+ * Services {@link LoadingStrategy}
+ *
+ * @since 2.7.7
  */
-public interface RemotingConstants {
+public class ServicesLoadingStrategy implements LoadingStrategy {
 
-    String BACKUP_KEY = "backup";
+    @Override
+    public String directory() {
+        return "META-INF/services/";
+    }
+
+    @Override
+    public boolean overridden() {
+        return true;
+    }
+
+    @Override
+    public int getPriority() {
+        return MIN_PRIORITY;
+    }
+
 }

@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package com.ximalaya.cloud.schedule.common.utils;
+package com.ximalaya.schedule.core.common.utils;
 
 /**
  * Contains some methods to check array.

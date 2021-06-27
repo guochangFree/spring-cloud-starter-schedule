@@ -14,15 +14,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.ximalaya.cloud.schedule.common;
+package com.ximalaya.schedule.core.common;
 
-import com.ximalaya.cloud.schedule.common.config.Configuration;
-import com.ximalaya.cloud.schedule.common.config.InmemoryConfiguration;
-import com.ximalaya.cloud.schedule.common.constants.RemotingConstants;
-import com.ximalaya.cloud.schedule.common.utils.ArrayUtils;
-import com.ximalaya.cloud.schedule.common.utils.CollectionUtils;
-import com.ximalaya.cloud.schedule.common.utils.NetUtils;
-import com.ximalaya.cloud.schedule.common.utils.StringUtils;
+import com.ximalaya.schedule.core.common.configuration.Configuration;
+import com.ximalaya.schedule.core.common.configuration.InmemoryConfiguration;
+import com.ximalaya.schedule.core.common.constants.RemotingConstants;
+import com.ximalaya.schedule.core.common.utils.ArrayUtils;
+import com.ximalaya.schedule.core.common.utils.CollectionUtils;
+import com.ximalaya.schedule.core.common.utils.NetUtils;
+import com.ximalaya.schedule.core.common.utils.StringUtils;
 
 import java.io.Serializable;
 import java.io.UnsupportedEncodingException;
@@ -42,10 +42,8 @@ import java.util.TreeMap;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Predicate;
 
-
-import static com.ximalaya.cloud.schedule.common.constants.CommonConstants.*;
-import static com.ximalaya.cloud.schedule.common.convert.Converter.convertIfPossible;
-import static com.ximalaya.cloud.schedule.common.utils.StringUtils.isBlank;
+import static com.ximalaya.schedule.core.common.constants.CommonConstants.*;
+import static com.ximalaya.schedule.core.common.convert.Converter.convertIfPossible;
 
 /**
  * URL - Uniform Resource Locator (Immutable, ThreadSafe)
@@ -605,7 +603,7 @@ class URL implements Serializable {
     public <T> T getParameter(String key, Class<T> valueType, T defaultValue) {
         String value = getParameter(key);
         T result = null;
-        if (!isBlank(value)) {
+        if (!StringUtils.isBlank(value)) {
             result = convertIfPossible(value, valueType);
         }
         if (result == null) {
@@ -1466,7 +1464,7 @@ class URL implements Serializable {
 
     private void append(StringBuilder target, String parameterName, boolean first) {
         String parameterValue = this.getParameter(parameterName);
-        if (!isBlank(parameterValue)) {
+        if (!StringUtils.isBlank(parameterValue)) {
             if (!first) {
                 target.append(":");
             }
