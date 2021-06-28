@@ -19,7 +19,7 @@ package com.ximalaya.schedule.core.common.extention;
 /**
  * ExtensionFactory
  */
-@org.apache.dubbo.common.extension.SPI
+@SPI
 public interface ExtensionFactory {
 
     /**

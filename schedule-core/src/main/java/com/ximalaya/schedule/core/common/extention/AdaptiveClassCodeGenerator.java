@@ -16,10 +16,11 @@
  */
 package com.ximalaya.schedule.core.common.extention;
 
-import org.apache.dubbo.common.URL;
-import org.apache.dubbo.common.logger.Logger;
-import org.apache.dubbo.common.logger.LoggerFactory;
-import org.apache.dubbo.common.utils.StringUtils;
+
+import com.ximalaya.schedule.core.common.URL;
+import com.ximalaya.schedule.core.common.utils.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;

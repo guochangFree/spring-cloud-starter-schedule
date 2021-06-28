@@ -16,7 +16,8 @@
  */
 package com.ximalaya.schedule.core.common.extention;
 
-import org.apache.dubbo.common.URL;
+
+import com.ximalaya.schedule.core.common.URL;
 
 import java.lang.annotation.*;
 
@@ -26,13 +27,13 @@ import java.lang.annotation.*;
  * multiple implementations.
  * <ol>
  * <li>{@link Activate#group()} specifies group criteria. Framework SPI defines the valid group values.
- * <li>{@link Activate#value()} specifies parameter key in {@link URL} criteria.
+ * <li>{@link Activate#value()} specifies parameter key in {@link com.ximalaya.schedule.core.common.URL} criteria.
  * </ol>
- * SPI provider can call {@link ExtensionLoader#getActivateExtension(URL, String, String)} to find out all activated
+ * SPI provider can call {@link ExtensionLoader#getActivateExtension(URL, String, String)} (URL, String, String)} to find out all activated
  * extensions with the given criteria.
  *
  * @see SPI
- * @see URL
+ * @see com.ximalaya.schedule.core.common.URL
  * @see ExtensionLoader
  */
 @Documented

@@ -79,5 +79,12 @@ public interface CommonConstants {
 
     String PREFERRED_NETWORK_INTERFACE = "schedule.network.interface.preferred";
 
+    String REMOVE_VALUE_PREFIX = "-";
+
+    String CATEGORY_KEY = "category";
+
+    String SIDE_KEY = "side";
+
+
 
 }

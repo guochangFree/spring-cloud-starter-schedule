@@ -16,9 +16,12 @@
  */
 package com.ximalaya.schedule.core.common.extention;
 
+import com.ximalaya.schedule.core.common.Extension;
 import com.ximalaya.schedule.core.common.URL;
+import com.ximalaya.schedule.core.common.compiler.Compiler;
 import com.ximalaya.schedule.core.common.context.Lifecycle;
 import com.ximalaya.schedule.core.common.extention.support.ActivateComparator;
+import com.ximalaya.schedule.core.common.extention.support.WrapperComparator;
 import com.ximalaya.schedule.core.common.utils.*;
 import com.ximalaya.schedule.core.common.utils.lang.Prioritized;
 import org.slf4j.Logger;
@@ -34,8 +37,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 import java.util.regex.Pattern;
 
-import static com.ximalaya.schedule.core.common.constants.CommonConstants.COMMA_SPLIT_PATTERN;
-import static com.ximalaya.schedule.core.common.constants.CommonConstants.DEFAULT_KEY;
+import static com.ximalaya.schedule.core.common.constants.CommonConstants.*;
 import static java.util.Arrays.asList;
 import static java.util.Collections.sort;
 import static java.util.ServiceLoader.load;
@@ -246,7 +248,7 @@ public class ExtensionLoader<T> {
      * @param values extension point names
      * @param group  group
      * @return extension list which are activated
-     * @see org.apache.dubbo.common.extension.Activate
+     * @see Activate
      */
     public List<T> getActivateExtension(URL url, String[] values, String group) {
         List<T> activateExtensions = new ArrayList<>();
@@ -530,7 +532,7 @@ public class ExtensionLoader<T> {
                     clazz + " can't be interface!");
         }
 
-        if (!clazz.isAnnotationPresent(org.apache.dubbo.common.extension.Adaptive.class)) {
+        if (!clazz.isAnnotationPresent(Adaptive.class)) {
             if (StringUtils.isBlank(name)) {
                 throw new IllegalStateException("Extension name is blank (Extension " + type + ")!");
             }
@@ -670,7 +672,7 @@ public class ExtensionLoader<T> {
 
                 if (CollectionUtils.isNotEmpty(wrapperClassesList)) {
                     for (Class<?> wrapperClass : wrapperClassesList) {
-                        org.apache.dubbo.common.extension.Wrapper wrapper = wrapperClass.getAnnotation(org.apache.dubbo.common.extension.Wrapper.class);
+                        Wrapper wrapper = wrapperClass.getAnnotation(Wrapper.class);
                         if (wrapper == null
                                 || (ArrayUtils.contains(wrapper.matches(), name) && !ArrayUtils.contains(wrapper.mismatches(), name))) {
                             instance = injectExtension((T) wrapperClass.getConstructor(type).newInstance(instance));
@@ -705,7 +707,7 @@ public class ExtensionLoader<T> {
                 /**
                  * Check {@link org.apache.dubbo.common.extension.DisableInject} to see if we need auto injection for this property
                  */
-                if (method.getAnnotation(org.apache.dubbo.common.extension.DisableInject.class) != null) {
+                if (method.getAnnotation(DisableInject.class) != null) {
                     continue;
                 }
                 Class<?> pt = method.getParameterTypes()[0];
@@ -806,7 +808,7 @@ public class ExtensionLoader<T> {
      * extract and cache default extension name if exists
      */
     private void cacheDefaultExtensionName() {
-        final org.apache.dubbo.common.extension.SPI defaultAnnotation = type.getAnnotation(org.apache.dubbo.common.extension.SPI.class);
+        final SPI defaultAnnotation = type.getAnnotation(SPI.class);
         if (defaultAnnotation == null) {
             return;
         }
@@ -919,7 +921,7 @@ public class ExtensionLoader<T> {
                     type + ", class line: " + clazz.getName() + "), class "
                     + clazz.getName() + " is not subtype of interface.");
         }
-        if (clazz.isAnnotationPresent(org.apache.dubbo.common.extension.Adaptive.class)) {
+        if (clazz.isAnnotationPresent(Adaptive.class)) {
             cacheAdaptiveClass(clazz, overridden);
         } else if (isWrapperClass(clazz)) {
             cacheWrapperClass(clazz);
@@ -974,12 +976,12 @@ public class ExtensionLoader<T> {
      * for compatibility, also cache class with old alibaba Activate annotation
      */
     private void cacheActivateClass(Class<?> clazz, String name) {
-        org.apache.dubbo.common.extension.Activate activate = clazz.getAnnotation(org.apache.dubbo.common.extension.Activate.class);
+        Activate activate = clazz.getAnnotation(Activate.class);
         if (activate != null) {
             cachedActivates.put(name, activate);
         } else {
             // support com.alibaba.dubbo.common.extension.Activate
-            com.alibaba.dubbo.common.extension.Activate oldActivate = clazz.getAnnotation(com.alibaba.dubbo.common.extension.Activate.class);
+            Activate oldActivate = clazz.getAnnotation(Activate.class);
             if (oldActivate != null) {
                 cachedActivates.put(name, oldActivate);
             }
@@ -1027,7 +1029,7 @@ public class ExtensionLoader<T> {
 
     @SuppressWarnings("deprecation")
     private String findAnnotationName(Class<?> clazz) {
-        org.apache.dubbo.common.Extension extension = clazz.getAnnotation(org.apache.dubbo.common.Extension.class);
+        Extension extension = clazz.getAnnotation(Extension.class);
         if (extension != null) {
             return extension.value();
         }
@@ -1057,9 +1059,9 @@ public class ExtensionLoader<T> {
     }
 
     private Class<?> createAdaptiveExtensionClass() {
-        String code = new org.apache.dubbo.common.extension.AdaptiveClassCodeGenerator(type, cachedDefaultName).generate();
+        String code = new AdaptiveClassCodeGenerator(type, cachedDefaultName).generate();
         ClassLoader classLoader = findClassLoader();
-        org.apache.dubbo.common.compiler.Compiler compiler = ExtensionLoader.getExtensionLoader(org.apache.dubbo.common.compiler.Compiler.class).getAdaptiveExtension();
+        Compiler compiler = ExtensionLoader.getExtensionLoader(Compiler.class).getAdaptiveExtension();
         return compiler.compile(code, classLoader);
     }
 

@@ -16,7 +16,7 @@
  */
 package com.ximalaya.schedule.core.common.extention;
 
-import org.apache.dubbo.common.lang.Prioritized;
+import com.ximalaya.schedule.core.common.utils.lang.Prioritized;
 
 public interface LoadingStrategy extends Prioritized {
 

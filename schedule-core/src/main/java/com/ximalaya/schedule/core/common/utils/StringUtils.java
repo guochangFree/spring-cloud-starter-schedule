@@ -16,9 +16,11 @@
  */
 package com.ximalaya.schedule.core.common.utils;
 
+import com.ximalaya.schedule.core.common.utils.io.UnsafeStringWriter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.PrintWriter;
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -983,6 +985,26 @@ public final class StringUtils {
                     "invalid hex byte '%s' at index %d of '%s'", s.subSequence(pos, pos + 2), pos, s));
         }
         return (byte) ((hi << 4) + lo);
+    }
+
+    /**
+     * @param e
+     * @return string
+     */
+    public static String toString(Throwable e) {
+        UnsafeStringWriter w = new UnsafeStringWriter();
+        PrintWriter p = new PrintWriter(w);
+        p.print(e.getClass().getName());
+        if (e.getMessage() != null) {
+            p.print(": " + e.getMessage());
+        }
+        p.println();
+        try {
+            e.printStackTrace(p);
+            return w.toString();
+        } finally {
+            p.close();
+        }
     }
 
 }

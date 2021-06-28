@@ -16,7 +16,6 @@
  */
 package com.ximalaya.schedule.core.common.extention;
 
-import org.apache.dubbo.common.URL;
 
 import java.lang.annotation.*;
 
@@ -24,7 +23,7 @@ import java.lang.annotation.*;
  * Provide helpful information for {@link ExtensionLoader} to inject dependency extension instance.
  *
  * @see ExtensionLoader
- * @see URL
+ * @see com.ximalaya.schedule.core.common.URL
  */
 @Documented
 @Retention(RetentionPolicy.RUNTIME)
@@ -34,8 +33,8 @@ public @interface Adaptive {
      * Decide which target extension to be injected. The name of the target extension is decided by the parameter passed
      * in the URL, and the parameter names are given by this method.
      * <p>
-     * If the specified parameters are not found from {@link URL}, then the default extension will be used for
-     * dependency injection (specified in its interface's {@link org.apache.dubbo.common.extension.SPI}).
+     * If the specified parameters are not found from {@link com.ximalaya.schedule.core.common.URL}, then the default extension will be used for
+     * dependency injection (specified in its interface's {@link SPI}).
      * <p>
      * For example, given <code>String[] {"key1", "key2"}</code>:
      * <ol>

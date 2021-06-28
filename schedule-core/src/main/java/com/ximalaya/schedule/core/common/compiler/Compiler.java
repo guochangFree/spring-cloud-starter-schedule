@@ -14,22 +14,24 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.ximalaya.schedule.core.common.extention;
+package com.ximalaya.schedule.core.common.compiler;
+
+
+import com.ximalaya.schedule.core.common.extention.SPI;
 
 /**
- * Dubbo internal {@link LoadingStrategy}
- *
- * @since 2.7.7
+ * Compiler. (SPI, Singleton, ThreadSafe)
  */
-public class DubboInternalLoadingStrategy implements LoadingStrategy {
+@SPI("javassist")
+public interface Compiler {
 
-    @Override
-    public String directory() {
-        return "META-INF/dubbo/internal/";
-    }
+    /**
+     * Compile java source code.
+     *
+     * @param code        Java source code
+     * @param classLoader classloader
+     * @return Compiled class
+     */
+    Class<?> compile(String code, ClassLoader classLoader);
 
-    @Override
-    public int getPriority() {
-        return Integer.MIN_VALUE;
-    }
 }
