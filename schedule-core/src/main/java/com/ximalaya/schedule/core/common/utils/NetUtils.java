@@ -25,8 +25,6 @@ import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.regex.Pattern;
 
-import com.ximalaya.schedule.core.common.URL;
-
 import static com.ximalaya.schedule.core.common.constants.CommonConstants.*;
 import static java.util.Collections.emptyList;
 
@@ -189,29 +187,6 @@ public class NetUtils {
         }
         return LOCALHOST_VALUE;
     }
-
-    public static String filterLocalHost(String host) {
-        if (host == null || host.length() == 0) {
-            return host;
-        }
-        if (host.contains("://")) {
-            URL u = URL.valueOf(host);
-            if (NetUtils.isInvalidLocalHost(u.getHost())) {
-                return u.setHost(NetUtils.getLocalHost()).toFullString();
-            }
-        } else if (host.contains(":")) {
-            int i = host.lastIndexOf(':');
-            if (NetUtils.isInvalidLocalHost(host.substring(0, i))) {
-                return NetUtils.getLocalHost() + host.substring(i);
-            }
-        } else {
-            if (NetUtils.isInvalidLocalHost(host)) {
-                return NetUtils.getLocalHost();
-            }
-        }
-        return host;
-    }
-
 
     /**
      * Find first valid IP from local network card

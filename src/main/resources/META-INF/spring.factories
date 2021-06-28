@@ -1,3 +1,0 @@
-org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-com.alibaba.cloud.dubbo.autoconfigure.DubboMetadataAutoConfiguration,\
-com.alibaba.cloud.dubbo.env.DubboNonWebApplicationEnvironmentPostProcessor
