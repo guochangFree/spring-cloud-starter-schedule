@@ -21,6 +21,8 @@ import java.util.regex.Pattern;
 
 public interface CommonConstants {
 
+    String APPLICATION_KEY = "application";
+    String REMOTE_APPLICATION_KEY = "remote.application";
 
     String ENABLED_KEY = "enabled";
 
