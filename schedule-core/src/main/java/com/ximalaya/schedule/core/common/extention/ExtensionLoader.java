@@ -16,7 +16,6 @@
  */
 package com.ximalaya.schedule.core.common.extention;
 
-import com.ximalaya.schedule.core.common.Extension;
 import com.ximalaya.schedule.core.common.URL;
 import com.ximalaya.schedule.core.common.compiler.Compiler;
 import com.ximalaya.schedule.core.common.context.Lifecycle;
@@ -928,7 +927,7 @@ public class ExtensionLoader<T> {
         } else {
             clazz.getConstructor();
             if (StringUtils.isEmpty(name)) {
-                name = findAnnotationName(clazz);
+                name = findName(clazz);
                 if (name.length() == 0) {
                     throw new IllegalStateException("No such extension name for the class " + clazz.getName() + " in the config " + resourceURL);
                 }
@@ -1027,13 +1026,7 @@ public class ExtensionLoader<T> {
         }
     }
 
-    @SuppressWarnings("deprecation")
-    private String findAnnotationName(Class<?> clazz) {
-        Extension extension = clazz.getAnnotation(Extension.class);
-        if (extension != null) {
-            return extension.value();
-        }
-
+    private String findName(Class<?> clazz) {
         String name = clazz.getSimpleName();
         if (name.endsWith(type.getSimpleName())) {
             name = name.substring(0, name.length() - type.getSimpleName().length());
